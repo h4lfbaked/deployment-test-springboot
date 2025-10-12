@@ -10,6 +10,6 @@ public class TestService {
     
     public String test() {
         log.info("TestService test method called");
-        return "Service is working!";
+        return "Service is working lol!";
     }
 }
