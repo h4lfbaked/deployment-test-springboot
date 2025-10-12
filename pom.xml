@@ -52,12 +52,13 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
+				<version>3.13.0</version> <configuration>
+					<release>21</release>
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
-						</path>
+							<version>${lombok.version}</version> </path>
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
