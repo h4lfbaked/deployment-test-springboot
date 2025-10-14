@@ -18,7 +18,8 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Stage 2: Runtime stage
-FROM openjdk:21-jre-slim
+# BARIS INI YANG DIUBAH
+FROM eclipse-temurin:21-jre-jammy
 
 # Create non-root user for security
 RUN addgroup --system spring && adduser --system spring --ingroup spring
