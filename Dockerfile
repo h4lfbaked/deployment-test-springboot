@@ -1,6 +1,7 @@
 # Multi-stage build for Spring Boot application
 # Stage 1: Build stage
-FROM maven:3.8.7-openjdk-21 AS build
+# BARIS INI YANG DIUBAH
+FROM maven:3.8.8-eclipse-temurin-21 AS build
 
 # Set working directory
 WORKDIR /app
@@ -18,7 +19,6 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Stage 2: Runtime stage
-# BARIS INI YANG DIUBAH
 FROM eclipse-temurin:21-jre-jammy
 
 # Create non-root user for security
