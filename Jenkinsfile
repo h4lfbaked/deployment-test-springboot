@@ -60,10 +60,8 @@ pipeline {
             steps {
                 echo '=== Stage 4: Building and Pushing Docker Image ==='
                 script {
-                    // Build Docker image
                     def dockerImage = docker.build("${DOCKER_IMAGE_NAME}:${APP_VERSION}")
                     
-                    // Push to Docker Hub (tidak perlu https:// untuk Docker Hub)
                     docker.withRegistry('', "${DOCKER_CREDENTIALS_ID}") {
                         dockerImage.push("${APP_VERSION}")
                         dockerImage.push('latest')
@@ -81,13 +79,13 @@ pipeline {
                     def port = '8089'
                     def envSuffix = 'prod'
                     
-                    if (env.BRANCH_NAME == 'develop') {
-                        port = '8081'
+                    if (env.BRANCH_NAME == 'dev') {
+                        port = '8088'
                         envSuffix = 'dev'
                         echo "Deploying to Development environment..."
                     } else if (env.BRANCH_NAME == 'staging') {
-                        port = '8082'
-                        envSuffix = 'staging'
+                        port = '8087'
+                        envSuffix = 'uat'
                         echo "Deploying to Staging environment..."
                     } else if (env.BRANCH_NAME == 'main') {
                         echo "Deploying to Production environment..."
