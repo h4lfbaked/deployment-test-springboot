@@ -8,7 +8,7 @@ pipeline {
     
     environment {
         // Docker Registry Configuration
-        DOCKER_REGISTRY = 'docker.io' // Ganti dengan registry Anda (docker.io, gcr.io, etc.)
+        DOCKER_REGISTRY = '' // Kosongkan untuk Docker Hub
         DOCKER_IMAGE_NAME = 'h4lfbaked/springboot-test-3n192jdkska29831'
         DOCKER_CREDENTIALS_ID = 'docker-password' // ID credentials di Jenkins
         
@@ -60,10 +60,12 @@ pipeline {
             steps {
                 echo '=== Stage 4: Building and Pushing Docker Image ==='
                 script {
+                    // Build Docker image
                     def dockerImage = docker.build("${DOCKER_IMAGE_NAME}:${APP_VERSION}")
                     
-                    docker.withRegistry("https://${DOCKER_REGISTRY}", "${DOCKER_CREDENTIALS_ID}") {
-                        dockerImage.push()
+                    // Push to Docker Hub (tidak perlu https:// untuk Docker Hub)
+                    docker.withRegistry('', "${DOCKER_CREDENTIALS_ID}") {
+                        dockerImage.push("${APP_VERSION}")
                         dockerImage.push('latest')
                     }
                     
