@@ -78,7 +78,7 @@ pipeline {
             steps {
                 echo '=== Stage 5: Deploying Application ==='
                 script {
-                    def port = '8080'
+                    def port = '8089'
                     def envSuffix = 'prod'
                     
                     if (env.BRANCH_NAME == 'develop') {
