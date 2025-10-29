@@ -14,7 +14,7 @@ pipeline {
         
         // Application Configuration
         APP_NAME = 'springboot-test'
-        APP_VERSION = "${env.BUILD_NUMBER}"
+        APP_VERSION = "1.0.0"
     }
     
     stages {
