@@ -10,7 +10,7 @@ pipeline {
         // Docker Registry Configuration
         DOCKER_REGISTRY = 'docker.io' // Ganti dengan registry Anda (docker.io, gcr.io, etc.)
         DOCKER_IMAGE_NAME = 'h4lfbaked/springboot-test-3n192jdkska29831'
-        DOCKER_CREDENTIALS_ID = '7571965c-f489-4165-90a5-400dc497c05e' // ID credentials di Jenkins
+        DOCKER_CREDENTIALS_ID = 'docker-password' // ID credentials di Jenkins
         
         // Application Configuration
         APP_NAME = 'springboot-test'
