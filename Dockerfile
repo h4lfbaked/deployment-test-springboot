@@ -3,6 +3,9 @@
 # BARIS INI YANG DIUBAH
 FROM maven:3.8.8-eclipse-temurin-21 AS build
 
+# Set environment variables to allow HTTP repositories
+ENV MAVEN_OPTS="-Dmaven.resolver.transport=wagon"
+
 # Set working directory
 WORKDIR /app
 
@@ -14,13 +17,17 @@ COPY pom.xml .
 
 # Download dependencies (this layer will be cached if pom.xml doesn't change)
 # Use custom settings and allow insecure HTTP repositories
-RUN mvn dependency:go-offline -B -s .mvn/settings.xml
+RUN mvn dependency:go-offline -B -s .mvn/settings.xml \
+    -Dmaven.wagon.http.ssl.insecure=true \
+    -Dmaven.wagon.http.ssl.allowall=true
 
 # Copy source code
 COPY src ./src
 
 # Build the application
-RUN mvn clean package -DskipTests -s .mvn/settings.xml
+RUN mvn clean package -DskipTests -s .mvn/settings.xml \
+    -Dmaven.wagon.http.ssl.insecure=true \
+    -Dmaven.wagon.http.ssl.allowall=true
 
 # Stage 2: Runtime stage
 FROM eclipse-temurin:21-jre-jammy
