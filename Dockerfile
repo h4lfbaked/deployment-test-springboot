@@ -6,17 +6,21 @@ FROM maven:3.8.8-eclipse-temurin-21 AS build
 # Set working directory
 WORKDIR /app
 
+# Copy Maven configuration
+COPY .mvn .mvn
+
 # Copy pom.xml first for better Docker layer caching
 COPY pom.xml .
 
 # Download dependencies (this layer will be cached if pom.xml doesn't change)
-RUN mvn dependency:go-offline -B
+# Use custom settings and allow insecure HTTP repositories
+RUN mvn dependency:go-offline -B -s .mvn/settings.xml
 
 # Copy source code
 COPY src ./src
 
 # Build the application
-RUN mvn clean package -DskipTests
+RUN mvn clean package -DskipTests -s .mvn/settings.xml
 
 # Stage 2: Runtime stage
 FROM eclipse-temurin:21-jre-jammy
