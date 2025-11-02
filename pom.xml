@@ -35,18 +35,12 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<!-- Import JAR dari project test-uat -->
-		<dependency>
-			<groupId>com.jenkins</groupId>
-			<artifactId>test-uat</artifactId>
-			<version>1.0.0-UAT</version>
-		</dependency>
-
 		<dependency>
 			<groupId>com.sriks</groupId>
 			<artifactId>boost</artifactId>
 			<version>1.0.0-BOOST</version>
-		</dependency>		<dependency>
+		</dependency>		
+		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
