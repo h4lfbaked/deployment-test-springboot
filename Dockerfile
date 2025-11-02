@@ -1,6 +1,6 @@
 # Multi-stage build for Spring Boot application
 # Stage 1: Build stage
-# BARIS INI YANG DIUBAH
+# Use Maven 3.8.8 with JDK 21
 FROM maven:3.8.8-eclipse-temurin-21 AS build
 
 # Set environment variables to allow HTTP repositories
@@ -8,6 +8,9 @@ ENV MAVEN_OPTS="-Dmaven.resolver.transport=wagon"
 
 # Set working directory
 WORKDIR /app
+
+# Copy custom Maven settings to disable HTTP blocker
+COPY maven-settings.xml /root/.m2/settings.xml
 
 # Copy Maven configuration
 COPY .mvn .mvn
@@ -17,15 +20,23 @@ COPY pom.xml .
 
 # Download dependencies (this layer will be cached if pom.xml doesn't change)
 # Use custom settings and allow insecure HTTP repositories
-RUN mvn dependency:go-offline -B -s .mvn/settings.xml \
+RUN mvn dependency:go-offline -B \
     -Dmaven.wagon.http.ssl.insecure=true \
-    -Dmaven.wagon.http.ssl.allowall=true
+    -Dmaven.wagon.http.ssl.allowall=true \
+    -Dmaven.wagon.http.pool=false \
+    -Daether.connector.http.supportWebDav=false || true
+
+# If go-offline fails, try with -U flag
+RUN mvn dependency:resolve -B \
+    -Dmaven.wagon.http.ssl.insecure=true \
+    -Dmaven.wagon.http.ssl.allowall=true \
+    -Dmaven.wagon.http.pool=false
 
 # Copy source code
 COPY src ./src
 
 # Build the application
-RUN mvn clean package -DskipTests -s .mvn/settings.xml \
+RUN mvn clean package -DskipTests \
     -Dmaven.wagon.http.ssl.insecure=true \
     -Dmaven.wagon.http.ssl.allowall=true
 
