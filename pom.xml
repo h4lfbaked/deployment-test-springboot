@@ -50,6 +50,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<repositories>
+		<repository>
+				<id>halfbaked-releases</id>
+				<url>http://178.128.68.234:8081/repository/halfbaked-releases/</url>
+			</repository>
+		</repositories>
 	</dependencies>
 
 	<build>
