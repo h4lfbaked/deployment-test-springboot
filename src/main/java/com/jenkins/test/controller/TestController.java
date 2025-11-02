@@ -27,7 +27,6 @@ public class TestController {
         return ResponseEntity.ok(result);
     }
     
-    
     @GetMapping("/health")
     public ResponseEntity<String> health() {
         return ResponseEntity.ok("Application is running!");

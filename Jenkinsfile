@@ -1,5 +1,10 @@
 pipeline {
     agent any
+
+    triggers {
+        // Auto-trigger saat ada push dari GitHub via webhook
+        githubPush()
+    }
     
     tools {
         maven 'Maven 3.8.7' // Pastikan nama ini sesuai dengan konfigurasi Maven di Jenkins Global Tool Configuration
