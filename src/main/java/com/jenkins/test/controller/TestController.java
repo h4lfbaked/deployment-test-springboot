@@ -20,6 +20,13 @@ public class TestController {
         String result = testService.test();
         return ResponseEntity.ok(result);
     }
+
+    @GetMapping("/testPalaBapakKau")
+    public ResponseEntity<String> testPalaBapakKau() {
+        String result = testService.testPalaBapakKau();
+        return ResponseEntity.ok(result);
+    }
+    
     
     @GetMapping("/health")
     public ResponseEntity<String> health() {
